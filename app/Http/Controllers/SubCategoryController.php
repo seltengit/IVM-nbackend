@@ -9,11 +9,13 @@ use Illuminate\Http\JsonResponse;
 
 class SubCategoryController extends Controller
 {
-    public function index(): JsonResponse
+
+    public function index()
     {
-        $subCategories = SubCategory::with('category')->get();
-        return response()->json(['sub_categories' => $subCategories], 200);
+        return response()->json(SubCategory::all(), 200);
     }
+
+
 
     public function show($id): JsonResponse
     {
@@ -23,20 +25,23 @@ class SubCategoryController extends Controller
             return response()->json(['message' => 'SubCategory not found'], 404);
         }
 
-        return response()->json(['sub_category' => $subCategory], 200);
+        return response()->json([$subCategory], 200);
     }
 
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
+            'subcategory_name' => 'required|string|max:255',
         ]);
 
         $subCategory = SubCategory::create([
+            'subcategory_name' => $request->subcategory_name,
             'category_id' => $request->category_id,
-            'name' => $request->name,
+            'status' => $request -> status,
+            'description' => $request -> description,
         ]);
+        
+        
 
         return response()->json(['message' => 'SubCategory created successfully', 'sub_category' => $subCategory], 201);
     }
@@ -50,13 +55,14 @@ class SubCategoryController extends Controller
         }
 
         $request->validate([
-            'category_id' => 'exists:categories,id',
-            'name' => 'string|max:255',
+            'subcategory_name' => 'string|max:255',
         ]);
 
         $subCategory->update([
-            'category_id' => $request->category_id ?? $subCategory->category_id,
-            'name' => $request->name ?? $subCategory->name,
+            'subcategory_name' => $request->subcategory_name ?? $subCategory->subcategory_name,
+             'category_id' => $request->category_id  ?? $subCategory->category_id,
+            'status' => $request -> status ?? $subCategory->status,
+            'description' => $request -> description ?? $subCategory->description,
         ]);
 
         return response()->json(['message' => 'SubCategory updated successfully', 'sub_category' => $subCategory], 200);

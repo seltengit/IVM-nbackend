@@ -34,7 +34,7 @@ class StockController extends Controller
         if (!$stock) {
             return response()->json(['message' => 'Stock not found'], 404);
         }
-        return response()->json($stock, 200);
+        return response()->json([$stock], 200);
     }
 
     // Update stock

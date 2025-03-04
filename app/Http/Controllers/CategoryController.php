@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index(): JsonResponse
+    public function index()
     {
-        $categories = Category::all();
-        return response()->json(['categories' => $categories], 200);
+        return response()->json(Category::all(), 200);
     }
+
 
     public function show($id): JsonResponse
     {
@@ -26,7 +26,7 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        return response()->json(['category' => $category], 200);
+        return response()->json([$category], 200);
     }
 
 
@@ -34,7 +34,6 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'description' => 'required|string|max:255',
-            'size' => 'required|string|max:50',
             'category_name' => 'required|string|max:255',
             'status' => 'required|in:active,inactive',
             'image' => 'string|nullable',
@@ -57,7 +56,6 @@ class CategoryController extends Controller
 
         $request->validate([
             'description' => 'string|max:255|nullable',
-            'size' => 'string|max:50|nullable',
             'category_name' => 'string|max:255|nullable',
             'status' => 'in:active,inactive|nullable',
             'image' => 'string|nullable',
@@ -67,7 +65,6 @@ class CategoryController extends Controller
 
         $category->update([
             'description' => $request->description ?? $category->description,
-            'size' => $request->size ?? $category->size,
             'category_name' => $request->category_name ?? $category->category_name,
             'status' => $request->status ?? $category->status,
             'image' => $request->image ?? $category->image,

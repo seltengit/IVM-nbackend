@@ -11,7 +11,6 @@ class Category extends Model
 
     protected $fillable = [
         'description',
-        'size',
         'category_name',
         'status',
         'image',
@@ -20,8 +19,4 @@ class Category extends Model
         'updated_by'
     ];
 
-    public function subcategories()
-    {
-        return $this->hasMany(Subcategory::class, 'category_id', 'id');
-    }
 }

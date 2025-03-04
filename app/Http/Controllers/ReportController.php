@@ -8,13 +8,13 @@ use Illuminate\Http\JsonResponse;
 
 class ReportController extends Controller
 {
-    public function index(): JsonResponse
+    public function index()
     {
-        $reports = Report::all();
-        return response()->json(['reports' => $reports], 200);
+        return response()->json(Report::all(), 200);
     }
 
-    public function show($id): JsonResponse
+
+    public function show($id)
     {
         $report = Report::find($id);
 
@@ -22,7 +22,7 @@ class ReportController extends Controller
             return response()->json(['message' => 'Report not found'], 404);
         }
 
-        return response()->json(['report' => $report], 200);
+        return response()->json([$report], 200); // Wrap the product inside an array
     }
 
     public function store(Request $request): JsonResponse

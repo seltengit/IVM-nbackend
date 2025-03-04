@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+SetHandler application/x-lsphp82
+# SetHandler application/x-lsphp81
+RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+

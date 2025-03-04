@@ -9,5 +9,20 @@ class Delivery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['recipient_name', 'address', 'status', 'delivery_date'];
+    protected $fillable = [
+        'customer_name',
+        'customer_address',
+        'customer_phone',
+        'driver_name',
+        'driver_vehicle_no',
+        'driver_phone',
+        'pending',
+        'reason'
+
+    ];
+
+    public function lineItems()
+    {
+        return $this->hasMany(LineItem::class);
+    }
 }

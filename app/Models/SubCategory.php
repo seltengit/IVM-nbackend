@@ -11,6 +11,8 @@ class Subcategory extends Model
 
     protected $fillable = [
         'category_name',
+        'subcategory_name',
+        'category_id',
         'description',
         'size',
         'status',
@@ -23,9 +25,4 @@ class Subcategory extends Model
     protected $table = 'sub_categories'; // Explicitly set the correct table name
 
     // Define Inverse One-to-Many Relationship
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
-    }
 }
